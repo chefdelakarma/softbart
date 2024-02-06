@@ -1,0 +1,17 @@
+#!/bin/bash
+
+clipboard="xclip -o 2>/dev/null"
+options="--no-playlist"
+format=ba
+youtube="yt-dlp"
+next=""
+echo "waiting for link"
+while true; do
+	next=`$clipboard`
+	if [[ $next != $prev && $next =~ ^(https?\:\/\/)?((www\.|music\.)?youtube\.com|youtu\.be)\/.+$ ]]; then
+		$youtube --format $format $options $next
+		prev=$next
+		echo "waiting for link"			
+	fi
+	sleep 30
+done
