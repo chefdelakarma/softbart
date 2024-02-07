@@ -1,13 +1,13 @@
 #!/bin/bash
-
-clipboard="xclip -o 2>/dev/null"
-options="--no-playlist"
-format=ba
+[[ $XDG_SESSION_TYPE == "x11" ]] && clipboard="xclip -o"
+[[ $XDG_SESSION_TYPE == "wayland" ]] && clipboard="wl-paste"
+options="${options:-"--no-playlist"}
+format=${format:-"ba"}
 youtube="yt-dlp"
 next=""
 echo "waiting for link"
 while true; do
-	next=`$clipboard`
+	next=`$clipboard 2>/dev/null`
 	if [[ $next != $prev && $next =~ ^(https?\:\/\/)?((www\.|music\.)?youtube\.com|youtu\.be)\/.+$ ]]; then
 		$youtube --format $format $options $next
 		prev=$next
