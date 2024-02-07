@@ -4,7 +4,6 @@
 options=${options:-"--no-playlist"}
 format=${format:-"ba"}
 youtube="yt-dlp"
-next=""
 echo "waiting for link"
 while true; do
 	next=`$clipboard 2>/dev/null`
