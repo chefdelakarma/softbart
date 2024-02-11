@@ -1,4 +1,7 @@
 #!/bin/bash
+# AUTHOR:			BJ Veurink
+# NAME: 			Youtubed (youtube dee) deamon
+# LICENSE:		GNU GPLv3
 [[ $XDG_SESSION_TYPE == "x11" ]] && clipboard="xclip -o"
 [[ $XDG_SESSION_TYPE == "wayland" ]] && clipboard="wl-paste"
 options=${options:-"--no-playlist"}
