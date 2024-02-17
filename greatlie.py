@@ -22,7 +22,7 @@ class greatlie:
 		self.nanswers+=1
 		self.date_answers.append(datetime.now())
 	def islie():
-		if self.list_lies[self.nlies-1] == self.list_answers[self.nanswers-1]:
+		if self.list_lies[self.nlies-1] != self.list_answers[self.nanswers-1]:
 			return True
 		else:
 			return False
