@@ -29,4 +29,4 @@ class greatlie:
 	def getanswer():
 		return self.list_lies[self.nlies - 1]
 		
-var_greatlie = greatlie(3,1)
+object_greatlie = greatlie(3,1)
