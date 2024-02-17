@@ -21,6 +21,6 @@ class greatlie:
 			return False
 		return True
 	def getanswer():
-		return self.list_lies[ 1]
+		return self.list_lies[-1]
 		
 object_greatlie = greatlie(3)
