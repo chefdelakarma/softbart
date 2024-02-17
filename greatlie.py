@@ -17,9 +17,7 @@ class greatlie:
 		self.list_answers.append(answer)
 		self.date_answers.append(datetime.now())
 	def islie():
-		if self.list_lies[-1] == self.list_answers[-1]:
-			return False
-		return True
+		return (self.list_lies[-1] != self.list_answers[-1])
 	def getanswer():
 		return self.list_lies[-1]
 		
