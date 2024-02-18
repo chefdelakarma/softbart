@@ -6,12 +6,13 @@
 [[ $XDG_SESSION_TYPE == "wayland" ]] && clipboard="wl-paste"
 options=${options:-"--no-playlist"}
 format=${format:-"ba"}
+output=${output:-"%(title)s.%(ext)s"}
 youtube="yt-dlp"
 echo "waiting for link"
 while true; do
 	next=`$clipboard 2>/dev/null`
 	if [[ $next != $prev && $next =~ ^(https?\:\/\/)?((www\.|music\.)?youtube\.com|youtu\.be)\/.+$ ]]; then
-		$youtube --format $format $options $next
+		$youtube --format $format $options -o $output $next
 		prev=$next
 		echo "waiting for link"			
 	fi
