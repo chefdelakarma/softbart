@@ -7,7 +7,6 @@
 options=${options:-"--no-playlist"}
 format=${format:-"ba"}
 output=${output:-"%(title)s.%(ext)s"}
-youtube="yt-dlp"
 expire_notify=${expire_notify:-5000}
 echo "waiting for link"
 while true; do
@@ -15,7 +14,7 @@ while true; do
 	if [[ $next != $prev && $next =~ ^(https?\:\/\/)?((www\.|music\.)?youtube\.com|youtu\.be)\/.+$ ]]; then
 		title=$(yt-dlp --get-title $next )
 		notify-send -t ${expire_notify} "yt-dlp: ${title}"
-		$youtube --format $format $options -o $output $next
+		yt-dlp --format $format $options -o $output $next
 		prev=$next
 		echo "waiting for link"			
 	fi
