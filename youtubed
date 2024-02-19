@@ -11,12 +11,14 @@ expire_notify=${expire_notify:-5000}
 echo "waiting for link"
 while true; do
 	next=`$clipboard 2>/dev/null`
-	if [[ $next != $prev && $next =~ ^(https?\:\/\/)?((www\.|music\.)?youtube\.com|youtu\.be)\/.+$ ]]; then
-		title=$(yt-dlp --get-title $next )
-		notify-send -t ${expire_notify} "yt-dlp: ${title}"
-		yt-dlp --format $format $options -o $output $next
+	if [[ $next != $prev ]]; then
 		prev=$next
-		echo "waiting for link"			
+		if [[ $next =~ ^(https?\:\/\/)?((www\.|music\.)?youtube\.com|youtu\.be)\/.+$ ]]; then
+			title=$(yt-dlp --get-title $next )
+			notify-send -t ${expire_notify} "yt-dlp: ${title}"
+			yt-dlp --format $format $options -o $output $next
+			echo "waiting for link"	
+		fi
 	fi
 	sleep 30
 done
