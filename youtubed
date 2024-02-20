@@ -17,11 +17,11 @@ while true; do
 			title=$(yt-dlp --get-title $next )
 			notify-send -t ${expire_notify} "yt-dlp: ${title}"
 			yt-dlp --format $format $options -o $output $next
-			echo "waiting for link"
 		else
 			echo "is not a rigth URL to youtube"
 			echo "link= $next"
 		fi
+		echo "waiting for link"
 	fi
 	sleep 30
 done
