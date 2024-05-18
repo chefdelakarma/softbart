@@ -57,10 +57,10 @@ def create_region():
 	total = input("total?")
 	newregion = puzzle_region(shape, total)
 	puzzle_array.append(newregion)
-def filter(arraynr, in_or_out, number, repeattimes):
-	if in_or_out == "in":
+def filter(arraynr, income, number, repeattimes):
+	if income:
 		puzzle_array[arraynr].filterin(number, repeattimes)
-	if in_or_out == "out":
+	else:
 		puzzle_array[arraynr].filterout(number, repeattimes)
 def list(verbose=False):
 	i_nr=0
