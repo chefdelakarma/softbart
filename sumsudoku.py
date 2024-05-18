@@ -36,26 +36,20 @@ class puzzle_region:
 		item=int(item)
 		newcombs=[]
 		for i in self.combs:
-			c = i.count(item)
-			if c < repeattimes
-				newcombs.append(i)
+			if i.count(item) < repeattimes: newcombs.append(i)
 		self.combs=newcombs
 	def filterin(self, item, repeattimes):
 		item=int(item)
 		newcombs=[]
 		for i in self.combs:
-			c = i.count(item)
-			if c > repeattimes
-				newcombs.append(i)
+			if i.count(item) >= repeattimes: newcombs.append(i)
 		self.combs=newcombs
 	def remove_multiple(self):
 		newcombs=[]
 		multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
 		for i in items:
 	 		for j in self.combs:
-	 			count=j.count(i)
-	 			if count <= multiple:
-	 				newcombs.append(j)
+	 			if j.count(i) <= multiple: newcombs.append(j)
 	 	self.combs=newcombs
 	
 def create_region():
@@ -68,6 +62,12 @@ def filter(arraynr, in_or_out, number, repeattimes):
 		puzzle_array[arraynr].filterin(number, repeattimes)
 	if in_or_out == "out":
 		puzzle_array[arraynr].filterout(number, repeattimes)
+def list(verbose=False):
+	i_nr=0
+	for i in puzzle_array:
+		print(f"{i_nr}. {i.getproperties()}")
+  		if verbose: i.getcombs()
+
 	
 while True:
 	cmd=input("function arg?").split(' ',1)
