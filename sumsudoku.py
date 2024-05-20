@@ -17,15 +17,26 @@ class puzzle_region:
 		self.items=range(1,self.size+1)
 		self.combs = []
 	def setcombs(self):
+		multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
 		if self.operator == "sum":
 			for i in c(self.items, self.n):
 				if sum(i) == self.total:
-					self.combs.append(i)
-		if self.operator == "product":
+					add=True
+					for j in self.items:
+						if i.count(j) > multiple: 
+							add=False
+							break
+					if add: self.combs.append(i)
+		elif self.operator == "product":
 			for i in c(self.items, self.n):
 				if math.prod(i) == self.total:
-					self.combs.append(i)
-		self.remove_multiple()
+					add=True
+					for j in self.items:
+						if i.count(j) > multiple: 
+							add=False
+							break
+					if add: self.combs.append(i)
+					
 	def getcombs(self):
 		for i in self.combs:
 			print(i)
@@ -36,8 +47,8 @@ class puzzle_region:
 		item=int(item)
 		newcombs=[]
 		for i in self.combs:
-			if i.count(item) < repeat: newcombs.append(i)
-		self.combs=newcombs
+			if i.count(item) <= repeat: newcombs.append(i)
+		self.combs=newcombs.copy()
 	def filterin(self, item, repeat):
 		item=int(item)
 		newcombs=[]
@@ -47,10 +58,14 @@ class puzzle_region:
 	def remove_multiple(self):
 		newcombs=[]
 		multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
-		for i in self.items:
-	 		for j in self.combs:
-	 			if j.count(i) <= multiple: newcombs.append(j)
-		self.combs=newcombs
+		for i in self.combs:
+			add=True
+			for j in self.items:
+	 			if i.count(j) > multiple: 
+	 				add=False
+	 				break
+			if add: newcombs.append(j)
+		self.combs=newcombs.copy()
 	
 def create_region():
 	shape = input("shape?")
