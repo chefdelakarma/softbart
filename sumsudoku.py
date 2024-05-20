@@ -1,5 +1,5 @@
 #!/bin/env python3
-from itertools import combinations_with_replacement
+from itertools import combinations_with_replacement as c
 import math
 
 puzzle_array = []
@@ -11,19 +11,18 @@ class puzzle_region:
 		self.operator=str(operator)
 		if isinstance(shape, str):
 			self.shape=[ int(i) for i in shape.split(',') ]
-		if isinstance(shape, list):
+		elif isinstance(shape, list):
 			self.shape=shape
-		self.number_of_boxes=sum(self.shape)
-		self.items=list(range(1,size+1))
+		self.n=sum(self.shape)
+		self.items=range(1,self.size+1)
 		self.combs = []
-		
 	def setcombs(self):
-		if operator == "sum":
-			for i in combinations_with_replacement(self.items, self.number_of_boxes):
+		if self.operator == "sum":
+			for i in c(self.items, self.n):
 				if sum(i) == self.total:
 					self.combs.append(i)
-		if operator == "product":
-			for i in combinations_with_replacement(self.items, self.number_of_boxes):
+		if self.operator == "product":
+			for i in c(self.items, self.n):
 				if math.prod(i) == self.total:
 					self.combs.append(i)
 		self.remove_multiple()
@@ -31,31 +30,33 @@ class puzzle_region:
 		for i in self.combs:
 			print(i)
 	def getproperties(self):
-		print(f"size: {self.size}, total: {self.total}, size: {self.size}, operator: {self.operator}")
-	def filterout(self, item, repeattimes):
+		return f"shape:{self.shape}, total:{self.total}, size:{self.size}, operator:{self.operator}"
+		
+	def filterout(self, item, repeat):
 		item=int(item)
 		newcombs=[]
 		for i in self.combs:
-			if i.count(item) < repeattimes: newcombs.append(i)
+			if i.count(item) < repeat: newcombs.append(i)
 		self.combs=newcombs
-	def filterin(self, item, repeattimes):
+	def filterin(self, item, repeat):
 		item=int(item)
 		newcombs=[]
 		for i in self.combs:
-			if i.count(item) >= repeattimes: newcombs.append(i)
+			if i.count(item) >= repeat: newcombs.append(i)
 		self.combs=newcombs
 	def remove_multiple(self):
 		newcombs=[]
 		multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
-		for i in items:
+		for i in self.items:
 	 		for j in self.combs:
 	 			if j.count(i) <= multiple: newcombs.append(j)
-	 	self.combs=newcombs
+		self.combs=newcombs
 	
 def create_region():
 	shape = input("shape?")
 	total = input("total?")
 	newregion = puzzle_region(shape, total)
+	newregion.setcombs()
 	puzzle_array.append(newregion)
 def filter(arraynr, income, number, repeattimes):
 	if income:
@@ -66,7 +67,8 @@ def list(verbose=False):
 	i_nr=0
 	for i in puzzle_array:
 		print(f"{i_nr}. {i.getproperties()}")
-  		if verbose: i.getcombs()
+		if verbose: i.getcombs()
+		i_nr=i_nr+1
 
 	
 while True:
