@@ -72,7 +72,7 @@ def create_region():
 	newregion = puzzle_region(shape, total)
 	newregion.setcombs()
 	puzzle_array.append(newregion)
-def filter(arraynr, income, item, repeat):
+def filter(arraynr, item, repeat):
 	puzzle_array[arraynr].filter(item, repeat)
 
 def list(verbose=False):
