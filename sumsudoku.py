@@ -43,17 +43,16 @@ class puzzle_region:
 	def getproperties(self):
 		return f"shape:{self.shape}, total:{self.total}, size:{self.size}, operator:{self.operator}"
 		
-	def filterout(self, item, repeat):
+	def filter(self, item, repeat):
 		item=int(item)
 		newcombs=[]
-		for i in self.combs:
-			if i.count(item) <= repeat: newcombs.append(i)
-		self.combs=newcombs.copy()
-	def filterin(self, item, repeat):
-		item=int(item)
-		newcombs=[]
-		for i in self.combs:
-			if i.count(item) >= repeat: newcombs.append(i)
+		if repeat > 0:
+			for i in self.combs:
+				if i.count(item) >= repeat: newcombs.append(i)
+		else:
+			repeat= -repeat
+			for i in self.combs:
+				if not i.count(item) >= repeat: newcombs.append(i)
 		self.combs=newcombs
 	def remove_multiple(self):
 		newcombs=[]
@@ -73,11 +72,9 @@ def create_region():
 	newregion = puzzle_region(shape, total)
 	newregion.setcombs()
 	puzzle_array.append(newregion)
-def filter(arraynr, income, number, repeattimes):
-	if income:
-		puzzle_array[arraynr].filterin(number, repeattimes)
-	else:
-		puzzle_array[arraynr].filterout(number, repeattimes)
+def filter(arraynr, income, item, repeat):
+	puzzle_array[arraynr].filter(item, repeat)
+
 def list(verbose=False):
 	i_nr=0
 	for i in puzzle_array:
