@@ -1,5 +1,5 @@
 #!/bin/env python3
-from itertools import combinations_with_replacement as c
+from itertools import combinations_with_replacement
 import math
 
 puzzle_array = []
@@ -19,7 +19,7 @@ class puzzle_region:
 	def setcombs(self):
 		multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
 		if self.operator == "sum":
-			for i in c(self.items, self.n):
+			for i in combinations_with_replacement(self.items, self.n):
 				if sum(i) == self.total:
 					add=True
 					for j in self.items:
@@ -28,7 +28,7 @@ class puzzle_region:
 							break
 					if add: self.combs.append(i)
 		elif self.operator == "product":
-			for i in c(self.items, self.n):
+			for i in combinations_with_replacement(self.items, self.n):
 				if math.prod(i) == self.total:
 					add=True
 					for j in self.items:
@@ -52,8 +52,8 @@ class puzzle_region:
 		else:
 			repeat= -repeat
 			for i in self.combs:
-				if not i.count(item) >= repeat: newcombs.append(i)
-		self.combs=newcombs
+				if i.count(item) <= repeat: newcombs.append(i)
+		self.combs=newcombs.copy()
 	def remove_multiple(self):
 		newcombs=[]
 		multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
@@ -66,16 +66,15 @@ class puzzle_region:
 			if add: newcombs.append(j)
 		self.combs=newcombs.copy()
 	
-def create_region():
+def c():
 	shape = input("shape?")
 	total = input("total?")
 	newregion = puzzle_region(shape, total)
 	newregion.setcombs()
 	puzzle_array.append(newregion)
-def filter(arraynr, item, repeat):
+def f(arraynr, item, repeat):
 	puzzle_array[arraynr].filter(item, repeat)
-
-def list(verbose=False):
+def l(verbose=False):
 	i_nr=0
 	for i in puzzle_array:
 		print(f"{i_nr}. {i.getproperties()}")
@@ -93,4 +92,7 @@ while True:
 	else:
 		argument=''
 	command=f"{function}({argument})"
-	exec(command)
+	try:
+		exec(command)
+	except:
+		print('errror')
