@@ -16,27 +16,18 @@ class puzzle_region:
 		self.n=sum(self.shape)
 		self.items=range(1,self.size+1)
 		self.combs = []
+		self.multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
+	def check_multiple(self, comb):
+		for j in self.items:
+			if comb.count(j) > self.multiple: return False
+		return True
 	def setcombs(self):
-		multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
 		if self.operator == "sum":
 			for i in combinations_with_replacement(self.items, self.n):
-				if sum(i) == self.total:
-					add=True
-					for j in self.items:
-						if i.count(j) > multiple: 
-							add=False
-							break
-					if add: self.combs.append(i)
+				if sum(i) == self.total and self.check_multiple(i): self.combs.append(i)
 		elif self.operator == "product":
 			for i in combinations_with_replacement(self.items, self.n):
-				if math.prod(i) == self.total:
-					add=True
-					for j in self.items:
-						if i.count(j) > multiple: 
-							add=False
-							break
-					if add: self.combs.append(i)
-					
+				if math.prod(i) == self.total and self.check_multiple(i): self.combs.append(i)
 	def getcombs(self):
 		for i in self.combs:
 			print(i)
@@ -94,5 +85,5 @@ while True:
 	command=f"{function}({argument})"
 	try:
 		exec(command)
-	except:
-		print('errror')
+	except Exception as e:
+		print(e)
