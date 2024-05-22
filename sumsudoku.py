@@ -45,17 +45,6 @@ class puzzle_region:
 			for i in self.combs:
 				if i.count(item) <= repeat: newcombs.append(i)
 		self.combs=newcombs.copy()
-	def remove_multiple(self):
-		newcombs=[]
-		multiple=len(self.shape ) if len(self.shape) < max(self.shape) else max(self.shape)
-		for i in self.combs:
-			add=True
-			for j in self.items:
-	 			if i.count(j) > multiple: 
-	 				add=False
-	 				break
-			if add: newcombs.append(j)
-		self.combs=newcombs.copy()
 	
 def c():
 	shape = input("shape?")
