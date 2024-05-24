@@ -10,7 +10,7 @@ class puzzle_region:
 		self.total=int(total)
 		self.operator=str(operator)
 		if isinstance(shape, str):
-			self.shape=[ int(i) for i in shape.split(',') ]
+			self.shape=[ int(i) for i in shape.split('-') ]
 		elif isinstance(shape, list):
 			self.shape=shape
 		self.n=sum(self.shape)
@@ -58,17 +58,20 @@ def show(verbose=False):
 	for i in puzzle_array:
 		i.getproperties()
 		if verbose: i.getcombs()
+def getcommand(cmd):
+	cmd=cmd.split(' ')
+	func=cmd[0]
+	if func == 'exit':
+		exit()
+	arg=''
+	if len(cmd) > 1:
+		for i in cmd[1:]: arg = arg + ',' + str(i)
+	arg=arg[1:]
+	result=f"{func}({arg})"
+	return result
 
 while True:
-	cmd=input("function arg?").split(' ',1)
-	function=cmd[0]
-	if function == 'exit':
-		exit()
-	if len(cmd) == 2:
-		argument=str(cmd[1])
-	else:
-		argument=''
-	command=f"{function}({argument})"
+	command=getcommand(input("?"))
 	try:
 		exec(command)
 	except Exception as e:
