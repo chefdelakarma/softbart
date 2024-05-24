@@ -58,14 +58,13 @@ def show(verbose=False):
 	for i in puzzle_array:
 		i.getproperties()
 		if verbose: i.getcombs()
-def getcommand(cmd):
-	cmd=cmd.split(' ')
+def getcommand(cmdline):
+	cmd=cmdline.split(' ')
 	func=cmd[0]
 	if func == 'exit':
 		exit()
 	arg=''
-	if len(cmd) > 1:
-		for i in cmd[1:]: arg = arg + ',' + str(i)
+	for i in cmd[1:]: arg = arg + ',' + str(i)
 	arg=arg[1:]
 	result=f"{func}({arg})"
 	return result
