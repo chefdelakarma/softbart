@@ -5,7 +5,7 @@ import math
 puzzle_array = []
 
 class puzzle_region:
-	def __init__(self, shape, total, size=9, operator="sum"):
+	def __init__(self, shape, total, size, operator):
 		self.size=int(size)
 		self.total=int(total)
 		self.operator=str(operator)
@@ -46,10 +46,8 @@ class puzzle_region:
 				if i.count(item) <= repeat: newcombs.append(i)
 		self.combs=newcombs.copy()
 	
-def new():
-	shape = input("shape?")
-	total = input("total?")
-	newregion = puzzle_region(shape, total)
+def new(shape, total, size=9, operator="sum"):
+	newregion = puzzle_region(shape, total, size, operator)
 	newregion.setcombs()
 	puzzle_array.append(newregion)
 def filter(arraynr, item, repeat):
