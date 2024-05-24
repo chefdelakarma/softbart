@@ -32,8 +32,8 @@ class puzzle_region:
 		for i in self.combs:
 			print(i)
 	def getproperties(self):
-		return f"shape:{self.shape}, total:{self.total}, size:{self.size}, operator:{self.operator}"
-		
+		properties=f"shape:{self.shape}, total:{self.total}, size:{self.size}, operator:{self.operator}"
+		print(properties)		
 	def filter(self, item, repeat):
 		item=int(item)
 		newcombs=[]
@@ -46,22 +46,19 @@ class puzzle_region:
 				if i.count(item) <= repeat: newcombs.append(i)
 		self.combs=newcombs.copy()
 	
-def c():
+def new():
 	shape = input("shape?")
 	total = input("total?")
 	newregion = puzzle_region(shape, total)
 	newregion.setcombs()
 	puzzle_array.append(newregion)
-def f(arraynr, item, repeat):
+def filter(arraynr, item, repeat):
 	puzzle_array[arraynr].filter(item, repeat)
-def l(verbose=False):
-	i_nr=0
+def show(verbose=False):
 	for i in puzzle_array:
-		print(f"{i_nr}. {i.getproperties()}")
+		i.getproperties()
 		if verbose: i.getcombs()
-		i_nr=i_nr+1
 
-	
 while True:
 	cmd=input("function arg?").split(' ',1)
 	function=cmd[0]
