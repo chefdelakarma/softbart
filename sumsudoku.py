@@ -62,8 +62,7 @@ def getcommand(cmdline):
 	if function == 'exit':
 		exit()
 	if len(cmd) == 2:
-		arguments = cmd[1]
-		arguments = arguments.replace(' ', ',')
+		arguments = cmd[1].replace(' ', ',')
 	else:
 		arguments=''
 	result=f"{function}({arguments})"
