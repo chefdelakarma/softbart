@@ -57,14 +57,16 @@ def show(verbose=False):
 		i.getproperties()
 		if verbose: i.getcombs()
 def getcommand(cmdline):
-	cmd=cmdline.split(' ')
-	func=cmd[0]
-	if func == 'exit':
+	cmd=cmdline.split(' ', 1)
+	function=cmd[0]
+	if function == 'exit':
 		exit()
-	arg=''
-	for i in cmd[1:]: arg = arg + ',' + str(i)
-	arg=arg[1:]
-	result=f"{func}({arg})"
+	if len(cmd) == 2:
+		arguments = cmd[1]
+		arguments = arguments.replace(' ', ',')
+	else:
+		arguments=''
+	result=f"{function}({arguments})"
 	return result
 
 while True:
