@@ -1,4 +1,8 @@
 #!/bin/env python3
+# AUTHOR:			BJ Veurink
+# NAME: 			sumsudoku.py
+# LICENSE:		GNU GPLv2
+
 from itertools import combinations_with_replacement
 import math
 
