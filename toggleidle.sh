@@ -9,6 +9,7 @@ if [[ $(pgrep ^swayidle) ]]; then
 	pkill ^swayidle
 else
 	notify-send -t $expire "swayidle on"
-	#swayidle -w timeout 300 'swaylock -f -c 0000ff' timeout  120 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'  before-sleep 'swaylock -f -c ff0000'
-	swayidle -w timeout 120 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+swayidle -w \
+    timeout 300 "$(for screen in "${screens_on[@]}"; do echo "swaymsg output $screen power off"; done)" \
+    resume "$(for screen in "${screens_on[@]}"; do echo "swaymsg output $screen power on"; done)" &
 fi
