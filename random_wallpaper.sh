@@ -14,7 +14,7 @@ WALLPAPER_DIR="/usr/share/wallpapers"
 
 mapfile -t allscreens < <(swaymsg -r -t get_outputs | jq -r '.[] | .name')
 
-[[ $(pgrep ^swaybg) ]] && pkill ^swaybg
+pkill -f swaybg
 for screen in "${allscreens[@]}"; do
 	RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f -name "*.jpg" | shuf -n 1)
 	swaybg -m fill -o "${screen}" -i "${RANDOM_WALLPAPER}" &
