@@ -15,8 +15,10 @@ fi
 pkill -f swayidle
 mapfile -t screens_on < <(swaymsg -r -t get_outputs | jq -r '.[] | select(.power == true) | .name')
 
-swayidle -w \
-    timeout 300 "$(for screen in "${screens_on[@]}"; do echo "swaymsg output $screen power off"; done)" \
-    resume "$(for screen in "${screens_on[@]}"; do echo "swaymsg output $screen power on"; done)" &
+if [[ ${#screens_on[@]} -gt 0 ]]; then
+	swayidle -w \
+	    timeout 300 "$(for screen in "${screens_on[@]}"; do echo "swaymsg output $screen power off"; done)" \
+	    resume "$(for screen in "${screens_on[@]}"; do echo "swaymsg output $screen power on"; done)" &
 
-notify-send -t $expire "swayidle on" "${screens_on[@]}"
+	notify-send -t $expire "swayidle on" "${screens_on[@]}"
+fi

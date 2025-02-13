@@ -11,7 +11,11 @@ export XDG_RUNTIME_DIR=/run/user/1000
 WALLPAPER_DIR="/usr/share/wallpapers"
 
 # Select a random wallpaper
-RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f -name "*.jpg" | shuf -n 1)
+
+mapfile -t allscreens < <(swaymsg -r -t get_outputs | jq -r '.[] | .name')
 
 [[ $(pgrep ^swaybg) ]] && pkill ^swaybg
-swaybg -m fill -o "*" -i "${RANDOM_WALLPAPER}" &
+for screen in "${allscreens[@]}"; do
+	RANDOM_WALLPAPER=$(find "$WALLPAPER_DIR" -type f -name "*.jpg" | shuf -n 1)
+	swaybg -m fill -o "${screen}" -i "${RANDOM_WALLPAPER}" &
+done
