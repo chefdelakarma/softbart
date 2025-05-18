@@ -9,13 +9,14 @@ private:
 	std::string RealAnswer;
 	std::string Question;
 	std::tm  TimeStamp_RealAnswer;
-	std::string Url;
 public:
-	BigLie(std::string Url, std::string Question, std::string WantedAnswer)
-		: Url(Url), Question(Question), WantedAnswer(WantedAnswer) {}
+	BigLie(std::string Question, std::string WantedAnswer)
+		: Question(Question), WantedAnswer(WantedAnswer) {}
 	std::string SetRealAnswer_GetLie(std::string RealAnswer);
+	void SetLie(std::string Question, std::string WantedAnswer);
 	void GetTimeStamp();
-	std::string GetUrl();
+	std::string GetQuestion();
+
 };
 std::string BigLie::SetRealAnswer_GetLie(std::string RealAnswer){
 	this->RealAnswer = RealAnswer;
@@ -23,20 +24,66 @@ std::string BigLie::SetRealAnswer_GetLie(std::string RealAnswer){
 	this->TimeStamp_RealAnswer = *std::localtime(&now);
 	return this->WantedAnswer;
 }
+void BigLie::SetLie(std::string Question, std::string WantedAnswer){
+	this->Question = Question;	
+	this->WantedAnswer = WantedAnswer;
+}
 void BigLie::GetTimeStamp(){
     std::cout << std::put_time(&this->TimeStamp_RealAnswer  , "%Y-%m-%d %H:%M:%S") << std::endl;
 }
-std::string BigLie::GetUrl(){
+std::string BigLie::GetQuestion(){
+	return this->Question;
+}
+
+class Sites {
+private:
+	std::string Url;
+	int MaxQuestions, CountQuestions;
+	BigLie** Lies;
+public:
+	Sites(std::string Url, int MaxQuestions);
+
+	~Sites();
+	std::string GetUrl();
+	void AddLie(std::string Question, std::string WantedAnswer);
+	void Interface();
+};
+Sites::Sites(std::string Url, int MaxQuestions){
+		this->Url = Url;
+		this->MaxQuestions = MaxQuestions;
+		this->Lies = new BigLie*[MaxQuestions];
+}
+
+Sites::~Sites(){
+	delete[] Lies;
+}
+
+std::string Sites::GetUrl(){
 	return this->Url;
 }
+void Sites::AddLie(std::string Question, std::string WantedAnswer){
+	Lies[this->CountQuestions++] = new BigLie(Question, WantedAnswer);
+}
+void Sites::Interface(){
+	std::string Answer;
+	std::cout << "URL " << this->Url << std::endl; 
+	for (int i=0; i< this->CountQuestions; i++){
+	std::cout << "Question " << Lies[i]->GetQuestion() << std::endl;
+	std::cout << "Answer" ;
+	std::cin >> Answer;
+	std::cout << "Lie is " << Lies[i]->SetRealAnswer_GetLie(Answer) << std::endl;
+	}
+}
+
 int main() {
-
-	BigLie myBigLie[3] = { BigLie("http://voorbeeld.com","cookies", "waar"), BigLie("http://site.com/pagina","toestemming xxx", "waar"), BigLie("http://voorbeeld.com","BlaBlaBla", "nietwaar")};
-
+	Sites mySites[3] = { Sites("http://voorbeeld.com",3), Sites("http://site.com/pagina", 3), Sites("http://voorbeeld.com", 3) };
 	for (int i=0; i<3;i++){
-		std::cout << "Lie " << myBigLie[i].SetRealAnswer_GetLie("False") << std::endl;
-		std::cout << "url " << myBigLie[i].GetUrl() << std::endl;
-		std::cout << "Time " << myBigLie[i].GetTimeStamp();
+		mySites[i].AddLie("toestemming xxx", "waar");
+		mySites[i].AddLie("BlaBlaBla", "nietwaar");
+		mySites[i].AddLie("cookies", "waar");
+	for (int i=0; i < 3; i++){
+		mySites[i].Interface();
+	}
 	}
 }
 
