@@ -62,8 +62,9 @@ std::string Sites::GetUrl(){
 	return this->Url;
 }
 void Sites::AddLie(std::string Question, std::string WantedAnswer){
+	while( this->CountQuestions < this->MaxQuestions ){
 	Lies[this->CountQuestions++] = new BigLie(Question, WantedAnswer);
-}
+}}
 void Sites::Interface(){
 	std::string Answer;
 	std::cout << "URL " << this->Url << std::endl; 
