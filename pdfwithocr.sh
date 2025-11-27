@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pdffile=${1:-input.pdf}
-dir=${2:-~/recepten.ocr}
+dir=${2:-output}
 [[ -d ${dir} ]] || mkdir -pv ${dir}
 language=nld
 [[ -d source ]] || mkdir -pv source
