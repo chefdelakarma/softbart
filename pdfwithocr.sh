@@ -2,11 +2,12 @@
 
 pdffile=${1:-input.pdf}
 dir=${2:-output}
+src=${src:-src}
 [[ -d ${dir} ]] || mkdir -pv ${dir}
 language=nld
-[[ -d source ]] || mkdir -pv source
+[[ -d $src]] || mkdir -pv $src
 pdftk $pdffile burst
-mv $pdffile source/
+mv $pdffile $src/
 
 for i in *.pdf
 do
