@@ -3,8 +3,8 @@
 pdffile=${1:-input.pdf}
 dir=${2:-output}
 src=${src:-src}
+language=${language:-nld}
 [[ -d ${dir} ]] || mkdir -pv ${dir}
-language=nld
 [[ -d $src]] || mkdir -pv $src
 pdftk $pdffile burst
 mv $pdffile $src/
