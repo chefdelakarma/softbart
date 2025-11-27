@@ -11,5 +11,5 @@ mv $pdffile source/
 for i in *.pdf
 do
 	echo file=$i
-	ocrmypdf -l $language $i ${dir}/$i
+	ocrmypdf -l $language --deskew --clean --rotate-pages $i ${dir}/$i
 done
